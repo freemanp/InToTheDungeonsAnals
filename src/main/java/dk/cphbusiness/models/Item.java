@@ -1,6 +1,5 @@
 package dk.cphbusiness.models;
 
-import com.google.common.base.Objects;
 import com.google.common.base.Preconditions;
 
 public class Item {
