@@ -1,5 +1,8 @@
 package dk.cphbusiness.models;
 
-public class Player {
+import java.util.List;
 
+public class Player {
+    private Dungeon currentDungeon;
+    private List<Item> items;
 }
