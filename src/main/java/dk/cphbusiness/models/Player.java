@@ -1,16 +1,17 @@
 package dk.cphbusiness.models;
 
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import com.google.common.base.Preconditions;
+import com.google.common.collect.Lists;
 
 public class Player {
     private Dungeon currentDungeon;
     private List<Item> items;
 
     public Player(Dungeon currentDungeon) {
-        this.items = new ArrayList<Item>();
+        this.items = Lists.newArrayList();
 
         setCurrentDungeon(currentDungeon);
     }
@@ -41,7 +42,13 @@ public class Player {
 
         this.items.add(item);
     }
-
+    
+    public void addItems(Item... items) {
+        Preconditions.checkNotNull(currentDungeon, "Items may not be null");
+        
+        Collections.addAll(this.items, items);
+    }
+    
     @Override
     public int hashCode() {
         final int prime = 31;
