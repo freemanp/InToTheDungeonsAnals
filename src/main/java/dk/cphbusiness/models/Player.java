@@ -38,13 +38,11 @@ public class Player {
     }
 
     public void addItem(Item item) {
-        Preconditions.checkNotNull(currentDungeon, "Item may not be null");
-
-        this.items.add(item);
+        addItems(item);
     }
     
     public void addItems(Item... items) {
-        Preconditions.checkNotNull(currentDungeon, "Items may not be null");
+        Preconditions.checkNotNull(items, "Items list may not be null");
         
         Collections.addAll(this.items, items);
     }
