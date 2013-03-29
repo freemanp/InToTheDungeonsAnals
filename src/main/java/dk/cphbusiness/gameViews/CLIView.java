@@ -1,5 +1,8 @@
 package dk.cphbusiness.gameViews;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.concurrent.ArrayBlockingQueue;
 
 public class CLIView extends GameView {
@@ -10,16 +13,45 @@ public class CLIView extends GameView {
     }
 
     public void run() {
+        MessageWriter messageWriter = new MessageWriter(messageQueue);
+        Thread messageWriterThread = new Thread(messageWriter);
+        
+        messageWriterThread.setDaemon(true);
+        messageWriterThread.start();
+        
         while (true) {
-            String message;
-
+            BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
+            String line = "";
+            
             try {
-                message = messageQueue.take();
-            } catch (InterruptedException e) {
-                continue;
+                line = in.readLine();
+            } catch (IOException e) {
+                e.printStackTrace();
             }
+            
+            System.out.println("comm: " + line);
+        }
+    }
+    
+    private class MessageWriter implements Runnable {
+        private ArrayBlockingQueue<String> messageQueue;
+        
+        public MessageWriter(ArrayBlockingQueue<String> messageQueue) {
+            this.messageQueue = messageQueue;
+        }
 
-            System.out.println(message);
+        public void run() {
+            while(true) {
+                String message;
+
+                try {
+                    message = messageQueue.take();
+                } catch (InterruptedException e) {
+                    continue;
+                }
+
+                System.out.println(message);
+            }
         }
     }
 }

@@ -23,6 +23,7 @@ public class GameRunner {
         
         CLIView cliView = new CLIView(messageQueue, commandQueue);
         gameViewThread = new Thread(cliView);
+        gameViewThread.setDaemon(true);
     }
 
     public void start() {
@@ -31,7 +32,16 @@ public class GameRunner {
         initializeGame();
         
         while(isGameRunning) {
-            
+            try {
+                Thread.currentThread().sleep(2000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            try {
+                messageQueue.put("mess: this is a message");
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
     }
     
