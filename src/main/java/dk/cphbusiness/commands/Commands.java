@@ -9,6 +9,7 @@ import dk.cphbusiness.commands.handlers.CommandHandler;
 import dk.cphbusiness.commands.handlers.HelpHandler;
 import dk.cphbusiness.commands.handlers.QuitHandler;
 import dk.cphbusiness.exceptions.CommandNotRegisteredException;
+import dk.cphbusiness.utils.Translator;
 
 public class Commands {
     private Map<Command, Class<? extends CommandHandler>> commandsAndHandlers;
@@ -16,9 +17,9 @@ public class Commands {
     public Commands() {
         commandsAndHandlers = Maps.newHashMap();
         
-        commandsAndHandlers.put(new Command("help", "Lists all commands and their purpose."), HelpHandler.class);
-        commandsAndHandlers.put(new Command("quit", "Exits the game."), QuitHandler.class);
-        commandsAndHandlers.put(new Command("move", "Move to a different dungeon"), QuitHandler.class);
+        commandsAndHandlers.put(new Command("help", Translator.getMessage("help.command")), HelpHandler.class);
+        commandsAndHandlers.put(new Command("quit", Translator.getMessage("quit.command")), QuitHandler.class);
+        commandsAndHandlers.put(new Command("move", Translator.getMessage("quit.command")), QuitHandler.class);
     }
     
     public Command[] listCommands() {

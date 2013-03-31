@@ -6,6 +6,8 @@ import java.util.List;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
 
+import dk.cphbusiness.utils.Translator;
+
 public class Dungeon {
     private String name;
     private List<Dungeon> connectedDungeons;
@@ -110,8 +112,7 @@ public class Dungeon {
 
     @Override
     public String toString() {
-        return "Dungeon [connectedDungeons=" + connectedDungeons + ", items="
-                + items + "]";
+        return Translator.getMessage("dungeon.tostring", connectedDungeons, items);
     }
 
     

@@ -11,6 +11,7 @@ import dk.cphbusiness.exceptions.CommandNotRegisteredException;
 import dk.cphbusiness.gameViews.CLIView;
 import dk.cphbusiness.models.Dungeon;
 import dk.cphbusiness.models.Player;
+import dk.cphbusiness.utils.Translator;
 
 public class GameRunner {
     private final int QUEUE_CAPACITY = 100;
@@ -54,7 +55,7 @@ public class GameRunner {
                 handlerClass = commands.getCommandHandler(cmd);
             } catch (CommandNotRegisteredException e) {
                 try {
-                    messageQueue.put("Command '" + cmd.getName() + "' is not valid. Type help for more assistence.");
+                    messageQueue.put(Translator.getMessage("invalid.command", "destroy"));
                     continue;
                 } catch (InterruptedException e1) {
                     e1.printStackTrace();

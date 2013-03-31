@@ -2,6 +2,8 @@ package dk.cphbusiness.models;
 
 import com.google.common.base.Preconditions;
 
+import dk.cphbusiness.utils.Translator;
+
 public class Item {
     private String name;
     private int value;
@@ -68,6 +70,6 @@ public class Item {
 
     @Override
     public String toString() {
-        return "Item [name=" + name + ", value=" + value + "]";
+        return Translator.getMessage("dungeon.tostring", name, value);
     }
 }

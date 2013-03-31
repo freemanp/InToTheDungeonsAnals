@@ -6,6 +6,8 @@ import java.util.List;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
 
+import dk.cphbusiness.utils.Translator;
+
 public class Player {
     private Dungeon currentDungeon;
     private List<Item> items;
@@ -88,7 +90,6 @@ public class Player {
 
     @Override
     public String toString() {
-        return "Player [currentDungeon=" + currentDungeon + ", items=" + items
-                + "]";
+        return Translator.getMessage("player.tostring", currentDungeon, items);;
     }
 }

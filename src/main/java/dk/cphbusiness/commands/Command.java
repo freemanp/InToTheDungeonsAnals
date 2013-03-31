@@ -4,6 +4,8 @@ import java.util.Arrays;
 
 import com.google.common.base.Preconditions;
 
+import dk.cphbusiness.utils.Translator;
+
 public class Command {
     private String name;
     private String[] args;
@@ -93,8 +95,7 @@ public class Command {
 
     @Override
     public String toString() {
-        return "Command [name=" + name + ", args=" + Arrays.toString(args)
-                + ", help=" + help + "]";
+        return Translator.getMessage("command.tostring", name, Arrays.toString(args), help);
     }
 
 }

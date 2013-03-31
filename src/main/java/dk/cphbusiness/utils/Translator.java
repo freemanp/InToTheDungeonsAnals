@@ -1,5 +1,6 @@
 package dk.cphbusiness.utils;
 
+import java.text.MessageFormat;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
@@ -34,5 +35,9 @@ public class Translator {
 	
 	public static String getMessage(String messageKey){
 		return messages.getString(messageKey);
+	}
+	
+	public static String getMessage(String messageKey, Object... arguments){
+		return MessageFormat.format(messages.getString(messageKey), arguments);
 	}
 }
