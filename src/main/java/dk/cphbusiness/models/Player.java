@@ -90,6 +90,6 @@ public class Player {
 
     @Override
     public String toString() {
-        return Translator.getMessage("player.tostring", currentDungeon, items);;
+        return Translator.getMessage("player.tostring", currentDungeon, items);
     }
 }
