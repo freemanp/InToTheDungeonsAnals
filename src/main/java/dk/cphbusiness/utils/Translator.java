@@ -8,7 +8,7 @@ public class Translator {
 	private static String localeCountry = "US";
 	private static ResourceBundle messages;
 	
-	{
+	static {
 		initializeBundle();
 	}
 
