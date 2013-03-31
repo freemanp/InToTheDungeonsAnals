@@ -8,6 +8,7 @@ import java.util.concurrent.ArrayBlockingQueue;
 import org.junit.Test;
 
 import dk.cphbusiness.GameRunner;
+import dk.cphbusiness.commands.Command;
 
 public class QuitHandlerTest {
 
@@ -20,7 +21,7 @@ public class QuitHandlerTest {
         quitHandler.setMessageQueue(messageQueue);
         quitHandler.setGameRunner(mockGameRunner);
         
-        quitHandler.handleCommand();
+        quitHandler.handleCommand(new Command("quit"));
         
         verify(mockGameRunner).stop();
     }

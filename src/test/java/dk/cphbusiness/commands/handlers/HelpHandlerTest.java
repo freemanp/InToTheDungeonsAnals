@@ -25,7 +25,7 @@ public class HelpHandlerTest {
         helpHandler.setMessageQueue(messageQueue);
         helpHandler.setCommands(mockedCommands);
         
-        helpHandler.handleCommand();
+        helpHandler.handleCommand(new Command("help"));
         
         Assert.assertTrue(messageQueue.size() == 1);
         Assert.assertTrue(messageQueue.take().equals("name - description"));

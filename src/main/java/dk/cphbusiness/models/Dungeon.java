@@ -7,6 +7,7 @@ import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
 
 public class Dungeon {
+    private String name;
     private List<Dungeon> connectedDungeons;
     private List<Item> items;
     
@@ -55,6 +56,17 @@ public class Dungeon {
         Collections.addAll(this.items, items);
     }
 
+    public String getName() {
+        return name;
+    }
+    
+    public void setName(String name) {
+        Preconditions.checkArgument(name != null, "Dungeon name may not be null");
+        Preconditions.checkArgument(!name.isEmpty(), "Dungeon name may not be an empty string");
+        
+        this.name = name;
+    }
+    
     @Override
     public int hashCode() {
         final int prime = 31;
@@ -101,5 +113,6 @@ public class Dungeon {
         return "Dungeon [connectedDungeons=" + connectedDungeons + ", items="
                 + items + "]";
     }
+
     
 }
