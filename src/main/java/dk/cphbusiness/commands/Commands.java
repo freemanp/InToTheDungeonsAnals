@@ -18,6 +18,7 @@ public class Commands {
         
         commandsAndHandlers.put(new Command("help", "Lists all commands and their purpose."), HelpHandler.class);
         commandsAndHandlers.put(new Command("quit", "Exits the game."), QuitHandler.class);
+        commandsAndHandlers.put(new Command("move", "Move to a different dungeon"), QuitHandler.class);
     }
     
     public Command[] listCommands() {

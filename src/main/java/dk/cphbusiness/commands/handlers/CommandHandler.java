@@ -39,12 +39,12 @@ public abstract class CommandHandler {
         this.commandQueue = commandQueue;
     }
     
-    public abstract void handleCommand();
-
     public void setCommands(Commands commands) {
         Preconditions.checkNotNull(commands,
                 "Commands may not be null");
         
         this.commands = commands;
     }
+    
+    public abstract void handleCommand(Command cmd);
 }

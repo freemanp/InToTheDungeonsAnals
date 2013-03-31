@@ -2,6 +2,8 @@ package dk.cphbusiness;
 
 import java.util.concurrent.ArrayBlockingQueue;
 
+import com.google.common.base.Preconditions;
+
 import dk.cphbusiness.commands.Command;
 import dk.cphbusiness.commands.Commands;
 import dk.cphbusiness.commands.handlers.CommandHandler;
@@ -19,6 +21,7 @@ public class GameRunner {
     
     Thread gameViewThread;
     private Commands commands;
+    private Player player;
     
     public GameRunner(Commands commands) {
         this.commands = commands;
@@ -70,7 +73,7 @@ public class GameRunner {
             handler.setGameRunner(this);
             handler.setCommands(commands);
             
-            handler.handleCommand();
+            handler.handleCommand(cmd);
         }
     }
     
@@ -80,10 +83,20 @@ public class GameRunner {
         
         d1.addConnectedDungeon(d2);
         
-        Player player = new Player(d1);
+        setPlayer(new Player(d1));
     }
 
     public void stop() {
         isGameRunning = false;
+    }
+
+    public Player getPlayer() {
+        return player;
+    }
+
+    public void setPlayer(Player player) {
+        Preconditions.checkNotNull(player);
+        
+        this.player = player;
     }
 }
