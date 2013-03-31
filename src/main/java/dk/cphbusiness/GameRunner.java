@@ -2,6 +2,10 @@ package dk.cphbusiness;
 
 import java.util.concurrent.ArrayBlockingQueue;
 
+import dk.cphbusiness.commands.Command;
+import dk.cphbusiness.commands.Commands;
+import dk.cphbusiness.commands.handlers.CommandHandler;
+import dk.cphbusiness.exceptions.CommandNotRegisteredException;
 import dk.cphbusiness.gameViews.CLIView;
 import dk.cphbusiness.models.Dungeon;
 import dk.cphbusiness.models.Player;
@@ -9,17 +13,19 @@ import dk.cphbusiness.models.Player;
 public class GameRunner {
     private final int QUEUE_CAPACITY = 100;
     private ArrayBlockingQueue<String> messageQueue; 
-    private ArrayBlockingQueue<String> commandQueue; 
+    private ArrayBlockingQueue<Command> commandQueue; 
     
     private boolean isGameRunning;
     
     Thread gameViewThread;
+    private Commands commands;
     
-    public GameRunner() {
+    public GameRunner(Commands commands) {
+        this.commands = commands;
         this.isGameRunning = false;
         
         messageQueue = new ArrayBlockingQueue<String>(QUEUE_CAPACITY);
-        commandQueue = new ArrayBlockingQueue<String>(QUEUE_CAPACITY);
+        commandQueue = new ArrayBlockingQueue<Command>(QUEUE_CAPACITY);
         
         CLIView cliView = new CLIView(messageQueue, commandQueue);
         gameViewThread = new Thread(cliView);
@@ -32,16 +38,39 @@ public class GameRunner {
         initializeGame();
         
         while(isGameRunning) {
+            Command cmd = null;
+
             try {
-                Thread.currentThread().sleep(2000);
+                cmd = commandQueue.take();
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
+            
+            Class<? extends CommandHandler> handlerClass = null;
             try {
-                messageQueue.put("mess: this is a message");
-            } catch (InterruptedException e) {
+                handlerClass = commands.getCommandHandler(cmd);
+            } catch (CommandNotRegisteredException e) {
+                try {
+                    messageQueue.put("Command '" + cmd.getName() + "' is not valid. Type help for more assistence.");
+                    continue;
+                } catch (InterruptedException e1) {
+                    e1.printStackTrace();
+                }
+            }
+            
+            CommandHandler handler = null;
+            try {
+                handler = handlerClass.newInstance();
+            } catch (InstantiationException | IllegalAccessException e) {
                 e.printStackTrace();
             }
+            
+            handler.setMessageQueue(messageQueue);
+            handler.setCommandQueue(commandQueue);
+            handler.setGameRunner(this);
+            handler.setCommands(commands);
+            
+            handler.handleCommand();
         }
     }
     
